@@ -1,0 +1,15 @@
+sudo: required
+
+language: generic
+services:
+  - docker
+
+before_install:
+  - echo "start Creating an image with dockerfile"
+  - docker build -t zkunsang/react-test3 -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true zkunsang/react-test3 npm run test -- --coverage
+# docker run -e CI=true 하는 부분은 트레비스에서 에러가 발생
+after_success:
+  - echo "TestSuccess"
